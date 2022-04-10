@@ -7,11 +7,11 @@
 
 - **epoll的使用**
 
-[![pthread](https://github.com/herui-ares/select-poll-epoll/raw/main/picture/pthread.png)](https://github.com/herui-ares/select-poll-epoll/blob/main/picture/pthread.png)
+[![epoll](https://github.com/herui-ares/Reactor/blob/main/picture/Epoll.png)]
 
 - **Reactor程序使用**
 
-[![select](https://github.com/herui-ares/select-poll-epoll/raw/main/picture/select.png)](https://github.com/herui-ares/select-poll-epoll/blob/main/picture/select.png)
+[![Reactor](https://github.com/herui-ares/Reactor/blob/main/picture/Reactor.png)]
 
 
 
@@ -143,13 +143,13 @@ int main() {
 
 **epoll监控事件描述图：**
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/b3b9780700fc4789ba56820bc6cea079.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQXJpZXPkuI3kvJpDKys=,size_20,color_FFFFFF,t_70,g_se,x_16)
+![Epoll_description](https://github.com/herui-ares/Reactor/blob/main/picture/Epoll_description.png)
 
 ## Reactor服务器模型
 
 
 **epoll的Reactor模型监控事件描述图：**
-![在这里插入图片描述](https://img-blog.csdnimg.cn/fc778f59b9f24ebdbc3f472dc512ff69.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQXJpZXPkuI3kvJpDKys=,size_20,color_FFFFFF,t_70,g_se,x_16)
+![Reactor_description](https://github.com/herui-ares/Reactor/blob/main/picture/Reactor_description.png)
 从图中可以看出，reactor多了一个结构体。服务进程处理epoll事件也不是单纯的逻辑操作，而是通过对应的事件数组中事件对应的fd指向的回调函数来处理接下来的逻辑操作。
 
 回想一下普通函数调用的机制：程序调用某函数，函数执行，程序等待，函数将结果和控制权返回给程序，程序继续处理。Reactor 释义“反应堆”，是一种事件驱动机制。和普通函数调用的不同之处在于：应用程序不是主动的调用某个 API 完成处理，而是恰恰相反，Reactor 逆置了事件处理流程(不再是主动地等事件就绪，而是它提前注册好的回调函数，当有对应事件发生时就调用回调函数)，应用程序需要提供相应的接口并注册到 Reactor 上，如果相应的事件发生，Reactor 将主动调用应用程序注册的接口，这些接口又称为“回调函
